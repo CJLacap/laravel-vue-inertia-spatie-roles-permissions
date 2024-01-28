@@ -41,17 +41,9 @@ class HandleInertiaRequests extends Middleware
                 ? new UserResource($request->user())
                 : null,
 
-            // 'auth.user' => fn () => $request->user()
-            //     ? $request->user()->only('id', 'name', 'email')
-            //     : null,
-
-            // 'auth.user.roles' => fn () => $request->user()
-            //     ? $request->user()->getRoleNames()
-            //     : null,
-
-            // 'auth.user.permissions' => fn () => $request->user()
-            //     ? $request->user()->getPermissionNames()
-            //     : null,
+            'flash' => [
+                'message' => fn () => $request->session()->get('message')
+            ],
 
             // 'ziggy' => function () use ($request) {
             //     return array_merge((new Ziggy)->toArray(), [

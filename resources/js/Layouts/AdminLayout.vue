@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import SidebarLink from '@/Components/SidebarLink.vue';
+import Notification from '@/Components/Notification.vue';
 
 const showingNavigationDropdown = ref(false);
-
 
 </script>
 
@@ -140,7 +140,11 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </div>
 
-            <div class="px-6 pt-6 2xl:container">
+            <div class="px-6 pt-6 xl:container">
+              <div v-if="$page.props.flash.message">
+                <Notification :message="$page.props.flash.message" />
+              </div>
+
                 <slot />
             </div>
         </div>
