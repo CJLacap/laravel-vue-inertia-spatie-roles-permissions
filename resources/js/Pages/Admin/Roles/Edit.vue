@@ -5,18 +5,24 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import {Multiselect} from 'vue-multiselect';
 
 
 const props = defineProps({
   role: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+  permissions: Array,
+});
 
 const form = useForm({
-    name: props.role.name,
+  name: props.role.name,
+  permissions: [],
 });
+
+
+
 
 </script>
 
@@ -55,6 +61,21 @@ const form = useForm({
               <InputError class="mt-2" :message="form.errors.name" />
           </div>
 
+          <div class="mt-4">
+            <InputLabel for="permissions" value="Permissions" />
+
+            <Multiselect
+            v-model="form.permissions"
+            :options="permissions"
+            :multiple="true"
+            :close-on-select="false"
+            placeholder="Choose permissions"
+            label="name"
+            track-by="id"
+            id="permissions"
+          ></Multiselect>
+          </div>
+
           <div class="flex items-center mt-4">
               <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                   Update
@@ -65,3 +86,19 @@ const form = useForm({
     </div>
   </AdminLayout>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<style>
+.multiselect__tags {
+  @apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm
+}
+.multiselect__input{
+  @apply dark:bg-gray-900 dark:text-gray-300
+}
+.multiselect__input::placeholder{
+  @apply dark:text-gray-300
+}
+.multiselect__element{
+  @apply dark:bg-gray-900 dark:text-gray-300
+}
+</style>
