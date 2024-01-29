@@ -5,14 +5,15 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-
+import {Multiselect} from 'vue-multiselect';
 
 defineProps({
-
+  permissions: Array,
 });
 
 const form = useForm({
     name: '',
+    permissions: []
 });
 
 </script>
@@ -35,8 +36,9 @@ const form = useForm({
       </div>
 
       <div class="mt-6 max-w-6xl mx-auto bg-slate-100 dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-semibold text-slate-200">New Role</h1>
         <form @submit.prevent="form.post(route('roles.store'))">
-          <div>
+          <div class="mt-4">
               <InputLabel for="name" value="Name" />
 
               <TextInput
@@ -50,6 +52,21 @@ const form = useForm({
               />
 
               <InputError class="mt-2" :message="form.errors.name" />
+          </div>
+
+          <div class="mt-4">
+            <InputLabel for="permissions" value="Permissions" />
+
+            <Multiselect
+            v-model="form.permissions"
+            :options="permissions"
+            :multiple="true"
+            :close-on-select="false"
+            placeholder="Choose permissions"
+            label="name"
+            track-by="id"
+            id="permissions"
+          ></Multiselect>
           </div>
 
           <div class="flex items-center mt-4">

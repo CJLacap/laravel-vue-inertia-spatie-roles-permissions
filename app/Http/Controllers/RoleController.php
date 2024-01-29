@@ -28,7 +28,9 @@ class RoleController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Admin/Roles/Create');
+        return Inertia::render('Admin/Roles/Create', [
+            'permissions' => PermissionResource::collection(Permission::all())
+        ]);
     }
 
     /**
@@ -36,10 +38,12 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        // Role::create([
-        //     'name' => $request->name
-        // ]);
-        Role::create($request->validated());
+        $role = Role::create([
+            'name' => $request->name
+        ]);
+        if($request->has('permissions')){
+            $role->syncPermissions($request->input('permissions.*.name'));
+        }
 
         return to_route('roles.index');
 
@@ -56,9 +60,10 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        $role = Role::findById($id);
+
+        $role->load('permissions');
 
         return Inertia::render('Admin/Roles/Edit',[
             'role' => new RoleResource($role),
@@ -69,20 +74,22 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreRoleRequest $request, string $id)
+    public function update(StoreRoleRequest $request, Role $role)
     {
-        $role = Role::findById($id);
-        $role->update($request->validated());
 
-        return to_route('roles.index');
+        $role->update([
+            'name' => $request->name
+        ]);
+        $role->syncPermissions($request->input('permissions.*.name'));
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        $role = Role::findById($id);
+
         $role->delete();
 
         return back();

@@ -9,6 +9,8 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -37,7 +39,11 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        User::create($request->validated());
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
         return to_route('users.index')->with('message', 'New User Has Been Added');
     }
@@ -85,6 +91,7 @@ class UserController extends Controller
         ]);
 
         $user->delete();
-        return redirect()->route('users.index')->with(['message' => 'User has been Deleted']);
+
+        return to_route('users.index')->with('message', 'User Has Been Deleted');
     }
 }

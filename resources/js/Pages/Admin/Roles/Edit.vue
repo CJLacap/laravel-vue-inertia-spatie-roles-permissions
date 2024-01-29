@@ -6,6 +6,11 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import {Multiselect} from 'vue-multiselect';
+import Table from '@/Components/Table.vue';
+import TableRow from '@/Components/TableRow.vue';
+import TableHeaderCell from '@/Components/TableHeaderCell.vue';
+import TableDataCell from '@/Components/TableDataCell.vue';
+import { onMounted, watch } from 'vue';
 
 
 const props = defineProps({
@@ -21,8 +26,14 @@ const form = useForm({
   permissions: [],
 });
 
+onMounted(() => {
+  form.permissions = props.role?.permissions
+});
 
-
+watch(
+  () => props.role,
+  () =>(form.permissions = props.role?.permissions)
+)
 
 </script>
 
@@ -32,7 +43,7 @@ const form = useForm({
   <AdminLayout>
      <!--Nav Header-->
      <template #nav_header>
-      Add Role
+      Update Role
     </template>
 
     <div class="max-w-7xl mx-auto py-4">
@@ -44,8 +55,9 @@ const form = useForm({
       </div>
 
       <div class="mt-6 max-w-6xl mx-auto bg-slate-100 dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-semibold text-slate-200">Role Info</h1>
         <form @submit.prevent="form.put(route('roles.update', role.id))">
-          <div>
+          <div class="mt-4">
               <InputLabel for="name" value="Name" />
 
               <TextInput
@@ -83,12 +95,36 @@ const form = useForm({
           </div>
       </form>
       </div>
+      <div class="mt-6 max-w-6xl mx-auto bg-slate-200 dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-semibold text-slate-200 mb-4">Role Permissions</h1>
+        <Table>
+          <template #header>
+            <TableRow>
+              <TableHeaderCell>ID</TableHeaderCell>
+              <TableHeaderCell>Name</TableHeaderCell>
+              <TableHeaderCell>Action</TableHeaderCell>
+            </TableRow>
+          </template>
+          <template #default>
+            <TableRow v-for="rolePermission in role.permissions" :key="rolePermission.id" class="border-b">
+              <TableDataCell>{{ rolePermission.id }}</TableDataCell>
+              <TableDataCell>{{ rolePermission.name }}</TableDataCell>
+              <TableDataCell class="space-x-4">
+                <Link :href="route('roles.permissions.destroy', [role, rolePermission])"
+                method="DELETE" as="button" class="text-red-400 hover:text-red-600">
+                  Revoke
+                </Link>
+              </TableDataCell>
+            </TableRow>
+          </template>
+        </Table>
+      </div>
     </div>
   </AdminLayout>
 </template>
 
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
-<style lang="postcss">
+
+<!-- <style lang="postcss">
 .multiselect__tags {
   @apply border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm
 }
@@ -101,4 +137,4 @@ const form = useForm({
 .multiselect__element{
   @apply dark:bg-gray-900 dark:text-gray-300
 }
-</style>
+</style> -->
