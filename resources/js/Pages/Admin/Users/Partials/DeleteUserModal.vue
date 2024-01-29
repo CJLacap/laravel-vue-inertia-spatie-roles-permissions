@@ -45,7 +45,7 @@ const closeModal = () => {
 </script>
 
 <template>
-  <DangerButton @click="confirmUserDeletion" class="text-red-400 hover:text-red-600"><slot/></DangerButton>
+  <button @click="confirmUserDeletion"><slot/></button>
 
   <Modal :show="confirmingUserDeletion" @close="closeModal">
       <div class="p-6">

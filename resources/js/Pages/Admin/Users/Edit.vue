@@ -6,19 +6,43 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import DeleteUserModal from './Partials/DeleteUserModal.vue';
+import DangerButton from '@/Components/DangerButton.vue';
+import {Multiselect} from 'vue-multiselect';
+import Table from '@/Components/Table.vue';
+import TableRow from '@/Components/TableRow.vue';
+import TableHeaderCell from '@/Components/TableHeaderCell.vue';
+import TableDataCell from '@/Components/TableDataCell.vue';
+import { onMounted, watch } from 'vue';
 
 
 const props = defineProps({
   user: {
     type: Object,
     required: true
-  }
+  },
+  roles: Array,
+  permissions: Array,
 });
 
 const form = useForm({
     name: props.user.name,
     email: props.user.email,
+    roles: [],
+    permissions: [],
 });
+
+onMounted(() => {
+  form.roles = props.user?.roles;
+  form.permissions = props.user?.permissions;
+});
+
+watch(
+  () => props.role,
+  () =>{
+    form.roles = props.user?.roles
+    form.permissions = props.user?.permissions
+  }
+)
 
 </script>
 
@@ -69,6 +93,34 @@ const form = useForm({
             />
 
             <InputError class="mt-2" :message="form.errors.email" />
+
+            <div class="mt-4">
+              <InputLabel for="roles" value="Roles" />
+              <Multiselect
+              v-model="form.roles"
+              :options="roles"
+              :multiple="true"
+              :close-on-select="false"
+              placeholder="Choose roles"
+              label="name"
+              track-by="id"
+              id="roles"
+              ></Multiselect>
+            </div>
+
+            <div class="mt-4">
+              <InputLabel for="permissions" value="Permissions" />
+              <Multiselect
+              v-model="form.permissions"
+              :options="permissions"
+              :multiple="true"
+              :close-on-select="false"
+              placeholder="Choose roles"
+              label="name"
+              track-by="id"
+              id="permissions"
+              ></Multiselect>
+            </div>
         </div>
 
           <div class="flex items-center mt-4">
@@ -77,6 +129,56 @@ const form = useForm({
               </PrimaryButton>
           </div>
       </form>
+      </div>
+
+      <div class="mt-6 max-w-6xl mx-auto bg-slate-200 dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-semibold text-slate-200 mb-4">Roles</h1>
+        <Table>
+          <template #header>
+            <TableRow>
+              <TableHeaderCell>ID</TableHeaderCell>
+              <TableHeaderCell>Name</TableHeaderCell>
+              <TableHeaderCell>Action</TableHeaderCell>
+            </TableRow>
+          </template>
+          <template #default>
+            <TableRow v-for="userRoles in user.roles" :key="userRoles.id" class="border-b">
+              <TableDataCell>{{ userRoles.id }}</TableDataCell>
+              <TableDataCell>{{ userRoles.name }}</TableDataCell>
+              <TableDataCell class="space-x-4">
+                <Link :href="route('roles.permissions.destroy', [user, userRoles])"
+                method="DELETE" as="button" class="text-red-400 hover:text-red-600">
+                  Revoke
+                </Link>
+              </TableDataCell>
+            </TableRow>
+          </template>
+        </Table>
+      </div>
+
+      <div class="mt-6 max-w-6xl mx-auto bg-slate-200 dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-semibold text-slate-200 mb-4">Permissions</h1>
+        <Table>
+          <template #header>
+            <TableRow>
+              <TableHeaderCell>ID</TableHeaderCell>
+              <TableHeaderCell>Name</TableHeaderCell>
+              <TableHeaderCell>Action</TableHeaderCell>
+            </TableRow>
+          </template>
+          <template #default>
+            <TableRow v-for="userPermission in user.permissions" :key="userPermission.id" class="border-b">
+              <TableDataCell>{{ userPermission.id }}</TableDataCell>
+              <TableDataCell>{{ userPermission.name }}</TableDataCell>
+              <TableDataCell class="space-x-4">
+                <Link :href="route('roles.permissions.destroy', [user, userPermission])"
+                method="DELETE" as="button" class="text-red-400 hover:text-red-600">
+                  Revoke
+                </Link>
+              </TableDataCell>
+            </TableRow>
+          </template>
+        </Table>
       </div>
 
       <div class="mt-6 max-w-6xl mx-auto bg-slate-100 dark:bg-gray-800 shadow-lg rounded-lg p-6">
@@ -88,8 +190,10 @@ const form = useForm({
               your account, please download any data or information that you wish to retain.
           </p>
       </header>
-      <DeleteUserModal :user="user">Delete User Account</DeleteUserModal>
+      <DeleteUserModal :user="user"><DangerButton>Delete User Account</DangerButton></DeleteUserModal>
       </div>
+
+
 
     </div>
   </AdminLayout>
