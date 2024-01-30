@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, watch } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import SidebarLink from '@/Components/SidebarLink.vue';
 import Notification from '@/Components/Notification.vue';

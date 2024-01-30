@@ -37,7 +37,8 @@ onMounted(() => {
 });
 
 watch(
-  () => props.role,
+  // () => props.role,
+  () => props.roles,
   () =>{
     form.roles = props.user?.roles
     form.permissions = props.user?.permissions
@@ -47,7 +48,7 @@ watch(
 </script>
 
 <template>
-  <Head title="Create New User" />
+  <Head title="Update User" />
 
   <AdminLayout>
      <!--Nav Header-->
