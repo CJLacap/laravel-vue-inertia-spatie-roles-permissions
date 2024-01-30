@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RemoveRoleFromUser;
 use App\Http\Controllers\RevokePermissionFromRoleCotroller;
 use App\Http\Controllers\RevokePermissionFromUser;
@@ -48,13 +49,12 @@ Route::middleware(['auth', 'role:admin',])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class);
+    Route::resource('/posts', PostController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRoleCotroller::class)->name('roles.permissions.destroy');
     Route::delete('/users/{user}/permissions/{permission}', RevokePermissionFromUser::class)->name('users.permissions.destroy');
     Route::delete('/users/{user}/roles/{role}', RemoveRoleFromUser::class)->name('users.roles.destroy');
 
 });
-
-
 
 require __DIR__.'/auth.php';
