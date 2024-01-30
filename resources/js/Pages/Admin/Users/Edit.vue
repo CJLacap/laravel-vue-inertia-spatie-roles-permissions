@@ -147,7 +147,7 @@ watch(
               <TableDataCell>{{ userRoles.name }}</TableDataCell>
               <TableDataCell class="space-x-4">
                 <Link :href="route('users.roles.destroy', [user, userRoles])"
-                method="DELETE" as="button" class="text-red-400 hover:text-red-600">
+                method="DELETE" as="button" class="text-red-400 hover:text-red-600" preserve-scroll>
                   Revoke
                 </Link>
               </TableDataCell>
@@ -172,7 +172,7 @@ watch(
               <TableDataCell>{{ userPermission.name }}</TableDataCell>
               <TableDataCell class="space-x-4">
                 <Link :href="route('users.permissions.destroy', [user, userPermission])"
-                method="DELETE" as="button" class="text-red-400 hover:text-red-600">
+                method="DELETE" as="button" class="text-red-400 hover:text-red-600" preserve-scroll>
                   Revoke
                 </Link>
               </TableDataCell>
