@@ -1,8 +1,8 @@
 <script setup>
-import { ref, defineProps, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 
-const props = defineProps({
+defineProps({
   message: String
 });
 
@@ -12,9 +12,7 @@ const showNotification = ref(false);
 onMounted(() => {
   showNotification.value = true;
   setTimeout(() => showNotification.value = false, 2000);
-
 });
-
 
 </script>
 
