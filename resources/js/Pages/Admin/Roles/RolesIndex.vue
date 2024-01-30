@@ -5,6 +5,7 @@ import Table from '@/Components/Table.vue';
 import TableRow from '@/Components/TableRow.vue';
 import TableHeaderCell from '@/Components/TableHeaderCell.vue';
 import TableDataCell from '@/Components/TableDataCell.vue';
+import DeleteRoleModal from './Partials/DeleteRoleModal.vue';
 
 defineProps(['roles'])
 </script>
@@ -41,7 +42,7 @@ defineProps(['roles'])
               <TableDataCell>{{ role.name }}</TableDataCell>
               <TableDataCell class="space-x-4">
                 <Link :href="route('roles.edit', role.id)" class="text-sky-400 hover:text-sky-600">Edit</Link>
-                <Link :href="route('roles.destroy', role.id)" method="DELETE" as="button" class="text-red-400 hover:text-red-600">Delete</Link>
+                <DeleteRoleModal :role="role"><p class="text-red-400 hover:text-red-600">Delete</p></DeleteRoleModal>
               </TableDataCell>
             </TableRow>
           </template>

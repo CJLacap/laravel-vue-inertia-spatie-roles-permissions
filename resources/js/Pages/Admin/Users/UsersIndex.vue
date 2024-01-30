@@ -6,7 +6,6 @@ import TableRow from '@/Components/TableRow.vue';
 import TableHeaderCell from '@/Components/TableHeaderCell.vue';
 import TableDataCell from '@/Components/TableDataCell.vue';
 import DeleteUserModal from './Partials/DeleteUserModal.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 
 defineProps(['users'])
 
@@ -47,7 +46,6 @@ defineProps(['users'])
               <TableDataCell>{{ user.email }}</TableDataCell>
               <TableDataCell class="space-x-4">
                 <Link :href="route('users.edit', user.id)" class="text-sky-400 hover:text-sky-600">Edit</Link>
-                <!-- <Link :href="route('users.destroy', user.id)" method="DELETE" as="button" class="text-red-400 hover:text-red-600">Delete</Link> -->
                 <DeleteUserModal :user="user"><p class="text-red-400 hover:text-red-600">Delete</p></DeleteUserModal>
               </TableDataCell>
             </TableRow>

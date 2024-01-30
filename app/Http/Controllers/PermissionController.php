@@ -73,9 +73,13 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Permission $permission, Request $request)
     {
-        $permission = Permission::findById($id);
+
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
+
         $permission->delete();
 
         return back();

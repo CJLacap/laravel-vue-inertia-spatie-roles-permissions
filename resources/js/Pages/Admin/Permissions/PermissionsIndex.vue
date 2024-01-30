@@ -5,6 +5,7 @@ import Table from '@/Components/Table.vue';
 import TableRow from '@/Components/TableRow.vue';
 import TableHeaderCell from '@/Components/TableHeaderCell.vue';
 import TableDataCell from '@/Components/TableDataCell.vue';
+import DeletePermissionModal from './Partials/DeletePermissionModal.vue';
 
 defineProps(['permissions'])
 </script>
@@ -41,7 +42,7 @@ defineProps(['permissions'])
               <TableDataCell>{{ permission.name }}</TableDataCell>
               <TableDataCell class="space-x-4">
                 <Link :href="route('permissions.edit', permission.id)" class="text-sky-400 hover:text-sky-600">Edit</Link>
-                <Link :href="route('permissions.destroy', permission.id)" method="DELETE" as="button" class="text-red-400 hover:text-red-600">Delete</Link>
+                <DeletePermissionModal :permission="permission"><p class="text-red-400 hover:text-red-600">Delete</p></DeletePermissionModal>
               </TableDataCell>
             </TableRow>
           </template>

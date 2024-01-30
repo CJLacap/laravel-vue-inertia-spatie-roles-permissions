@@ -87,8 +87,12 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role, Request $request)
     {
+
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
 
         $role->delete();
 
