@@ -5,7 +5,6 @@ import SidebarLink from '@/Components/SidebarLink.vue';
 import Notification from '@/Components/Notification.vue';
 
 const showingNavigationDropdown = ref(false);
-
 </script>
 
 <template>

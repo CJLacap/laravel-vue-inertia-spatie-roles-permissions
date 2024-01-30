@@ -5,10 +5,11 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-
+import {Multiselect} from 'vue-multiselect';
 
 defineProps({
-
+  roles: Array,
+  permissions: Array,
 });
 
 const form = useForm({
@@ -16,6 +17,8 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    roles: [],
+    permissions: [],
 });
 
 const submit = () => {
@@ -103,6 +106,34 @@ const submit = () => {
           />
 
           <InputError class="mt-2" :message="form.errors.password_confirmation" />
+        </div>
+
+        <div class="mt-4">
+          <InputLabel for="roles" value="Roles" />
+          <Multiselect
+          v-model="form.roles"
+          :options="roles"
+          :multiple="true"
+          :close-on-select="false"
+          placeholder="Choose roles"
+          label="name"
+          track-by="id"
+          id="roles"
+          ></Multiselect>
+        </div>
+
+        <div class="mt-4">
+          <InputLabel for="permissions" value="Permissions" />
+          <Multiselect
+          v-model="form.permissions"
+          :options="permissions"
+          :multiple="true"
+          :close-on-select="false"
+          placeholder="Choose roles"
+          label="name"
+          track-by="id"
+          id="permissions"
+          ></Multiselect>
         </div>
 
           <div class="flex items-center mt-4">
