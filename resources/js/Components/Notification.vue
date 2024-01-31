@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 
 
-defineProps({
+const props = defineProps({
   message: String
 });
 
@@ -12,6 +12,7 @@ const showNotification = ref(false);
 onMounted(() => {
   showNotification.value = true;
   setTimeout(() => showNotification.value = false, 2000);
+
 });
 
 </script>
