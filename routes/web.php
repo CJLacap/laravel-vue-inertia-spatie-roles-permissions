@@ -45,8 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:admin',])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::middleware(['auth', 'role:admin',])->prefix('/admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class);
     Route::resource('/permissions', PermissionController::class);
@@ -56,6 +56,6 @@ Route::middleware(['auth', 'role:admin',])->group(function () {
 
 });
 
-Route::resource('/posts', PostController::class);
+Route::resource('/posts', PostController::class)->middleware(['role:admin|moderator|writer']);
 
 require __DIR__.'/auth.php';
