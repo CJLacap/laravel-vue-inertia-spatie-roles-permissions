@@ -5,7 +5,7 @@ import Table from '@/Components/Table.vue';
 import TableRow from '@/Components/TableRow.vue';
 import TableHeaderCell from '@/Components/TableHeaderCell.vue';
 import TableDataCell from '@/Components/TableDataCell.vue';
-import DeletepostModal from './Partials/DeletepostModal.vue';
+import DeletePostModal from './Partials/DeletePostModal.vue';
 
 defineProps(['posts'])
 </script>
@@ -23,7 +23,7 @@ defineProps(['posts'])
       <div class="flex justify-between">
         <h1 class="text-2xl font-semibold text-slate-200">Posts Index</h1>
         <Link :href="route('posts.create')" class="px-3 py-2 text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded">
-          Add Post
+          New Post
         </Link>
       </div>
 
@@ -41,8 +41,8 @@ defineProps(['posts'])
               <TableDataCell>{{ post.id }}</TableDataCell>
               <TableDataCell>{{ post.title }}</TableDataCell>
               <TableDataCell class="space-x-4">
-                <Link :href="route('posts.edit', post.id)" class="text-sky-400 hover:text-sky-600">Edit</Link>
-                <!-- <DeletePostModal :post="post"><p class="text-red-400 hover:text-red-600">Delete</p></DeletePostModal> -->
+                <Link :href="route('posts.edit', post)" class="text-sky-400 hover:text-sky-600">Edit</Link>
+                <DeletePostModal :post="post"><p class="text-red-400 hover:text-red-600">Delete</p></DeletePostModal>
               </TableDataCell>
             </TableRow>
           </template>
