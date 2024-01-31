@@ -49,12 +49,13 @@ Route::middleware(['auth', 'role:admin',])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class);
-    Route::resource('/posts', PostController::class);
     Route::resource('/permissions', PermissionController::class);
     Route::delete('/roles/{role}/permissions/{permission}', RevokePermissionFromRoleCotroller::class)->name('roles.permissions.destroy');
     Route::delete('/users/{user}/permissions/{permission}', RevokePermissionFromUser::class)->name('users.permissions.destroy');
     Route::delete('/users/{user}/roles/{role}', RemoveRoleFromUser::class)->name('users.roles.destroy');
 
 });
+
+Route::resource('/posts', PostController::class);
 
 require __DIR__.'/auth.php';
