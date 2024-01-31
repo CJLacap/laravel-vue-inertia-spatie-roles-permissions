@@ -64,8 +64,9 @@ watch(
       </div>
 
       <div class="mt-6 max-w-6xl mx-auto bg-slate-100 dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <h1 class="text-2xl font-semibold text-gray-600 dark:text-slate-200">User Info</h1>
         <form @submit.prevent="form.patch(route('users.update', user))">
-          <div>
+          <div class="mt-4">
               <InputLabel for="name" value="Name" />
 
               <TextInput

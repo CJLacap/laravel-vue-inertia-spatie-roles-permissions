@@ -36,7 +36,7 @@ const form = useForm({
       </div>
 
       <div class="mt-6 max-w-6xl mx-auto bg-slate-100 dark:bg-gray-800 shadow-lg rounded-lg p-6">
-        <h1 class="text-2xl font-semibold text-slate-200">New Role</h1>
+        <h1 class="text-2xl font-semibold text-gray-600 dark:text-slate-200">New Role</h1>
         <form @submit.prevent="form.post(route('roles.store'))">
           <div class="mt-4">
               <InputLabel for="name" value="Name" />

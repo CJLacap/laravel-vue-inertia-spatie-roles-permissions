@@ -23,7 +23,7 @@ defineProps(['users'])
 
     <div class="max-w-7xl mx-auto py-4 lg:px-8">
       <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-slate-200">Users Index</h1>
+        <h1 class="text-2xl font-semibold text-gray-600 dark:text-slate-200">Users Index</h1>
         <Link :href="route('users.create')" class="px-3 py-2 text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded">
           New User
         </Link>

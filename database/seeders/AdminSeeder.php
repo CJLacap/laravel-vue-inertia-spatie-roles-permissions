@@ -27,5 +27,29 @@ class AdminSeeder extends Seeder
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ])->assignRole('admin');
+
+        User::create([
+            'name' => 'writer',
+            'email' => 'writer@email.com',
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
+        ])->assignRole('writer');
+
+        User::create([
+            'name' => 'moderator',
+            'email' => 'moderator@email.com',
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
+        ])->assignRole('moderator');
+
+        User::create([
+            'name' => 'user',
+            'email' => 'user@email.com',
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
+        ])->assignRole('user');
     }
 }
