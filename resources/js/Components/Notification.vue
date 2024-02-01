@@ -1,17 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { usePage } from "@inertiajs/vue3";
 
-
-const props = defineProps({
+defineProps({
   message: String
 });
 
-
 const showNotification = ref(false);
+
+const hideFlash = () => {
+	showNotification.value = false;
+	usePage().props.flash.message = "";
+};
 
 onMounted(() => {
   showNotification.value = true;
-  setTimeout(() => showNotification.value = false, 2000);
+  setTimeout(() => hideFlash(), 2000);
 
 });
 

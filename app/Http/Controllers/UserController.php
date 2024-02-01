@@ -94,7 +94,7 @@ class UserController extends Controller
         $user->syncRoles($request->input('roles.*.name'));
         $user->syncPermissions($request->input('permissions.*.name'));
 
-        return Redirect::back()->with('message', 'User Has Been Updated');
+        return back()->with('message', 'User Has Been Updated');
 
     }
 
