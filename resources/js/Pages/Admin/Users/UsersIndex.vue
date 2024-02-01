@@ -6,8 +6,11 @@ import TableRow from '@/Components/TableRow.vue';
 import TableHeaderCell from '@/Components/TableHeaderCell.vue';
 import TableDataCell from '@/Components/TableDataCell.vue';
 import DeleteUserModal from './Partials/DeleteUserModal.vue';
+import Pagination from '@/Components/Pagination.vue';
 
-defineProps(['users'])
+defineProps({
+  users: Object
+})
 
 
 </script>
@@ -30,27 +33,31 @@ defineProps(['users'])
       </div>
 
       <div class="mt-6">
-        <Table>
-          <template #header>
-            <TableRow>
-              <TableHeaderCell>ID</TableHeaderCell>
-              <TableHeaderCell>Name</TableHeaderCell>
-              <TableHeaderCell>Email</TableHeaderCell>
-              <TableHeaderCell>Action</TableHeaderCell>
-            </TableRow>
-          </template>
-          <template #default>
-            <TableRow v-for="user in users" :key="user.id" class="border-b">
-              <TableDataCell>{{ user.id }}</TableDataCell>
-              <TableDataCell>{{ user.name }}</TableDataCell>
-              <TableDataCell>{{ user.email }}</TableDataCell>
-              <TableDataCell class="space-x-4">
-                <Link :href="route('users.edit', user.id)" class="text-sky-400 hover:text-sky-600">Edit</Link>
-                <DeleteUserModal :user="user"><p class="text-red-400 hover:text-red-600">Delete</p></DeleteUserModal>
-              </TableDataCell>
-            </TableRow>
-          </template>
-        </Table>
+        <div v-if="users.data.length">
+          <Table>
+            <template #header>
+              <TableRow>
+                <TableHeaderCell>ID</TableHeaderCell>
+                <TableHeaderCell>Name</TableHeaderCell>
+                <TableHeaderCell>Email</TableHeaderCell>
+                <TableHeaderCell>Action</TableHeaderCell>
+              </TableRow>
+            </template>
+            <template #default>
+
+              <TableRow v-for="user in users.data" :key="user.id" class="border-b">
+                <TableDataCell>{{ user.id }}</TableDataCell>
+                <TableDataCell>{{ user.name }}</TableDataCell>
+                <TableDataCell>{{ user.email }}</TableDataCell>
+                <TableDataCell class="space-x-4">
+                  <Link :href="route('users.edit', user.id)" class="text-sky-400 hover:text-sky-600">Edit</Link>
+                  <DeleteUserModal :user="user"><p class="text-red-400 hover:text-red-600">Delete</p></DeleteUserModal>
+                </TableDataCell>
+              </TableRow>
+            </template>
+          </Table>
+          <Pagination :pagination="users.meta"/>
+        </div>
       </div>
     </div>
   </AdminLayout>
